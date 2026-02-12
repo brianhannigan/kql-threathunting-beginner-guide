@@ -1,565 +1,515 @@
-🔎 KQL Log Analysis & Threat Hunting – Complete Beginner to Practitioner Guide
+# 🔎 KQL Log Analysis & Threat Hunting
+## Complete Beginner-to-Practitioner Guide
 
-A practical, end-to-end walkthrough of using Kusto Query Language (KQL) for enterprise log analysis and threat hunting in Microsoft environments (Sentinel, Defender, Log Analytics).
+A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
 
-📚 Table of Contents
+---
 
-Why KQL Matters
+## 📚 Table of Contents
 
-What Logs Actually Are
+- [Why KQL Matters](#-why-kql-matters)
+- [What Logs Actually Are](#-what-logs-actually-are)
+- [How Logs Are Stored (Log Analytics Workspace)](#-how-logs-are-stored-log-analytics-workspace)
+- [Core Security Tables Explained](#-core-security-tables-explained)
+- [KQL Fundamentals](#-kql-fundamentals)
+- [Investigation Workflow Framework](#-investigation-workflow-framework)
+- [Full Threat Hunt Walkthrough (20 Flags)](#-full-threat-hunt-walkthrough-20-flags)
+- [Reusable Query Cheat Sheet](#-reusable-query-cheat-sheet)
+- [Using AI to Accelerate Threat Hunting](#-using-ai-to-accelerate-threat-hunting)
+- [Final Lessons & Career Impact](#-final-lessons--career-impact)
+- [What You Should Now Be Able To Do](#-what-you-should-now-be-able-to-do)
+- [Closing](#-closing)
 
-How Logs Are Stored (Log Analytics Workspace)
+---
 
-Core Security Tables Explained
-
-KQL Fundamentals
-
-Investigation Workflow Framework
-
-Full Threat Hunt Walkthrough (20 Flags)
-
-Reusable Query Cheat Sheet
-
-Using AI to Accelerate Threat Hunting
-
-Final Lessons & Career Impact
-
-🎯 Why KQL Matters
+## 🎯 Why KQL Matters
 
 If you want to work in:
 
-SOC (Security Operations Center)
+- SOC (Security Operations Center)
+- Threat Hunting
+- Incident Response
+- Cloud Security (Azure)
+- Microsoft Defender / Sentinel environments
 
-Threat Hunting
-
-Incident Response
-
-Cloud Security (Azure)
-
-Microsoft Defender / Sentinel environments
-
-👉 KQL is near essential.
+👉 **KQL is near-essential.**
 
 KQL is used to:
 
-Investigate alerts
-
-Perform threat hunts
-
-Build dashboards
-
-Create detections
-
-Tune alerts
-
-Analyze breaches
+- Investigate alerts
+- Perform threat hunts
+- Build dashboards
+- Create detections
+- Tune alerts
+- Analyze breaches
 
 It is one of the biggest differentiators between:
 
-L1 analyst
-
-L2/L3 analyst
-
-Security engineer
+- L1 analyst
+- L2/L3 analyst
+- Security engineer
 
 If you can think in KQL, you can think in:
 
-SQL
+- SQL
+- SPL
+- Other SIEM query languages
 
-SPL
+---
 
-Other SIEM query languages
-
-🧾 What Logs Actually Are
+## 🧾 What Logs Actually Are
 
 Logs are:
 
-📌 Digital records of activity on systems.
+- 📌 Digital records of activity on systems.
 
 Examples of events that generate logs:
 
-Logon success / failure
-
-Process execution (PowerShell, cmd, certutil)
-
-File creation / deletion
-
-Network connections
-
-Registry modifications
-
-Scheduled task creation
-
-Firewall activity
+- Logon success/failure
+- Process execution (PowerShell, cmd, certutil)
+- File creation/deletion
+- Network connections
+- Registry modifications
+- Scheduled task creation
+- Firewall activity
 
 Think of logs as:
 
-🎥 Security cameras for your IT environment — but in text form.
+- 🎥 Security cameras for your IT environment — but in text form.
 
 Without logs:
 
-You cannot investigate.
+- You cannot investigate.
+- You cannot prove compromise.
+- You cannot detect attacks.
 
-You cannot prove compromise.
+---
 
-You cannot detect attacks.
+## 🗄️ How Logs Are Stored (Log Analytics Workspace)
 
-🗄️ How Logs Are Stored (Log Analytics Workspace)
+In enterprise environments, logs from:
 
-In enterprise environments:
+- Endpoints
+- Azure
+- Firewalls
+- Identity systems
 
-Logs from:
-
-Endpoints
-
-Azure
-
-Firewalls
-
-Identity systems
-
-Are forwarded to a central repository.
+...are forwarded to a central repository.
 
 In Microsoft environments, that’s usually:
 
-Log Analytics Workspace
+- Log Analytics Workspace
+- Sometimes Azure Data Explorer
 
-Sometimes Azure Data Explorer
+Think of it like:
 
-You can think of it like:
+- 🧮 Millions of gigantic spreadsheets (tables)
 
-🧮 Millions of gigantic Excel spreadsheets (called tables).
+At scale, you may have:
 
-But instead of 1 million rows…
-
-You might have:
-
-Millions
-
-Hundreds of millions
-
-Billions
+- Millions
+- Hundreds of millions
+- Billions of records
 
 Which is why:
 
-You cannot manually “scroll logs.”
+- You cannot manually scroll logs.
+- You must query them.
 
-You must query them.
+---
 
-🗂️ Core Security Tables Explained
+## 🗂️ Core Security Tables Explained
 
-These are the most important tables for threat hunting:
+These are the most important tables for threat hunting.
 
-🔐 DeviceLogonEvents
+### 🔐 DeviceLogonEvents
+**Used for:**
+- RDP activity
+- Logon success/failure
+- Remote IP identification
 
-Used for:
+**Common fields:**
+- `AccountName`
+- `RemoteIP`
+- `ActionType`
+- `LogonType`
 
-RDP activity
+### 🖥️ DeviceProcessEvents
+**Used for:**
+- Command execution
+- PowerShell activity
+- LOLBins (`certutil`, `bitsadmin`, `mstsc`, `schtasks`)
+- Credential dumping tools
 
-Logon success/failure
+**Common fields:**
+- `FileName`
+- `ProcessCommandLine`
+- `InitiatingProcessCommandLine`
 
-Remote IP identification
+### 📁 DeviceFileEvents
+**Used for:**
+- File creation
+- Folder creation
+- ZIP archive staging
+- Malware placement
 
-Common fields:
+**Common fields:**
+- `FileName`
+- `FolderPath`
+- `ActionType`
 
-AccountName
+### 🌐 DeviceNetworkEvents
+**Used for:**
+- Command & Control (C2)
+- Data exfiltration
+- Remote connections
+- Port identification
 
-RemoteIP
+**Common fields:**
+- `RemoteIP`
+- `RemotePort`
+- `RemoteUrl`
+- `InitiatingProcessFileName`
 
-ActionType
+### 🧩 DeviceRegistryEvents
+**Used for:**
+- Defender exclusions
+- Persistence changes
+- Security configuration tampering
 
-LogonType
+**Common fields:**
+- `RegistryKey`
+- `RegistryValueName`
+- `RegistryValueData`
 
-🖥️ DeviceProcessEvents
+---
 
-Used for:
+## 🧠 KQL Fundamentals
 
-Command execution
-
-PowerShell activity
-
-LOLBins (certutil, bitsadmin, mstsc, schtasks)
-
-Credential dumping tools
-
-Common fields:
-
-FileName
-
-ProcessCommandLine
-
-InitiatingProcessCommandLine
-
-📁 DeviceFileEvents
-
-Used for:
-
-File creation
-
-Folder creation
-
-ZIP archive staging
-
-Malware placement
-
-Common fields:
-
-FileName
-
-FolderPath
-
-ActionType
-
-🌐 DeviceNetworkEvents
-
-Used for:
-
-Command & Control (C2)
-
-Data exfiltration
-
-Remote connections
-
-Port identification
-
-Common fields:
-
-RemoteIP
-
-RemotePort
-
-RemoteUrl
-
-InitiatingProcessFileName
-
-🧩 DeviceRegistryEvents
-
-Used for:
-
-Defender exclusions
-
-Persistence changes
-
-Security configuration tampering
-
-Common fields:
-
-RegistryKey
-
-RegistryValueName
-
-RegistryValueData
-
-🧠 KQL Fundamentals
-1️⃣ Start Small (Never Dump Entire Table)
+### 1) Start small (never dump the entire table)
+```kql
 DeviceLogonEvents
 | take 10
+```
 
-2️⃣ Filter with where
+### 2) Filter with `where`
+```kql
 DeviceLogonEvents
 | where DeviceName == "TARGET-VM"
+```
 
-3️⃣ Control Time
-
-Last 24 hours:
-
+### 3) Control time
+**Last 24 hours:**
+```kql
 | where TimeGenerated > ago(1d)
+```
 
-
-Specific range:
-
+**Specific range:**
+```kql
 | where TimeGenerated between (datetime(2025-01-01) .. datetime(2025-01-02))
+```
 
-4️⃣ Reduce Columns with project
+### 4) Reduce columns with `project`
+```kql
 | project TimeGenerated, AccountName, RemoteIP, ActionType
+```
 
-5️⃣ Count / Summarize Activity
+### 5) Count and summarize activity
+```kql
 | summarize count() by RemoteIP
-
+```
 
 Rename count field:
-
+```kql
 | summarize LoginAttempts=count() by RemoteIP
+```
 
-6️⃣ Sort
+### 6) Sort results
+```kql
 | sort by TimeGenerated asc
+```
 
-7️⃣ Distinct Values
+### 7) Show distinct values
+```kql
 | distinct RegistryValueName
+```
 
-🔄 Investigation Workflow Framework
+### 8) Query pattern to memorize
+```kql
+TableName
+| where TimeGenerated > ago(24h)
+| where <filter>
+| project <columns>
+| summarize <aggregation>
+| sort by <field>
+```
 
-Every investigation follows this mental model:
+---
 
-Narrow to time window
+## 🧭 Investigation Workflow Framework
 
-Filter by device
+Use this sequence during hunts:
 
-Identify compromised account
+1. **Scope** the device/user/time range.
+2. **Identify initial access** indicators.
+3. **Pivot across tables** (process, network, file, registry).
+4. **Build timeline** of attacker actions.
+5. **Map to MITRE ATT&CK** techniques.
+6. **Validate findings** with additional evidence.
+7. **Document artifacts** (IOCs, accounts, commands, hosts).
 
-Find suspicious commands
+---
 
-Identify persistence
+## 🧪 Full Threat Hunt Walkthrough (20 Flags)
 
-Identify C2
+> Scenario: Investigate suspicious activity on `TARGET-VM` and recover key attack artifacts.
 
-Identify exfiltration
+### 🔐 Phase 1 — Initial Access
 
-Identify anti-forensics
-
-Identify lateral movement
-
-This creates a timeline story.
-
-🕵️ Full Threat Hunt Walkthrough (20 Flags)
-
-Below is a complete end-to-end attack chain example.
-
-🔥 Phase 1 — Initial Access
-Flag 1 – RDP Source IP
+**Flag 1 – Suspicious source IP**
+```kql
 DeviceLogonEvents
 | where DeviceName == "TARGET-VM"
 | where ActionType == "LogonSuccess"
-| where isnotempty(RemoteIP)
-| project TimeGenerated, AccountName, RemoteIP, RemoteIPType
-| sort by TimeGenerated asc
+| summarize Logins=count() by RemoteIP
+| sort by Logins desc
+```
 
-
-Answer:
-
-First public RemoteIP
-
-Flag 2 – Compromised Account
-
-From previous query:
-
+**Flag 2 – Compromised account**
+```kql
+DeviceLogonEvents
+| where DeviceName == "TARGET-VM"
 | project AccountName
+| distinct AccountName
+```
 
-🔍 Phase 2 — Discovery
-Flag 3 – Network Enumeration Command
+### 🔍 Phase 2 — Discovery
+
+**Flag 3 – Network enumeration command**
+```kql
 DeviceProcessEvents
 | where DeviceName == "TARGET-VM"
 | where ProcessCommandLine has "arp"
 | project TimeGenerated, ProcessCommandLine
+```
+Example found: `arp -a`
 
+### 🛡️ Phase 3 — Defense Evasion
 
-Example found:
-
-arp -a
-
-🛡️ Phase 3 — Defense Evasion
-Flag 4 – Malware Staging Directory
+**Flag 4 – Malware staging directory**
+```kql
 DeviceFileEvents
 | where DeviceName == "TARGET-VM"
 | project TimeGenerated, FolderPath, FileName
 | sort by TimeGenerated asc
+```
+Look for suspicious directories like: `C:\ProgramData\WindowsCache\`
 
-
-Look for suspicious directories like:
-
-C:\ProgramData\WindowsCache\
-
-Flag 5 – Defender Extension Exclusions
+**Flag 5 – Defender extension exclusions**
+```kql
 DeviceRegistryEvents
 | where RegistryKey has "Exclusions"
 | distinct RegistryValueName
+```
+Count suspicious exclusions.
 
-
-Count them.
-
-Flag 6 – Defender Folder Exclusion
+**Flag 6 – Defender folder exclusion**
+```kql
 DeviceRegistryEvents
 | where RegistryKey has "Exclusions\\Paths"
 | project RegistryValueName
+```
 
-Flag 7 – LOLBin Used to Download Malware
+**Flag 7 – LOLBin used to download malware**
+```kql
 DeviceProcessEvents
 | where ProcessCommandLine has "certutil"
 | project ProcessCommandLine
+```
 
-♻️ Phase 4 — Persistence
-Flag 8 – Scheduled Task Name
+### ♻️ Phase 4 — Persistence
+
+**Flag 8 – Scheduled task name**
+```kql
 DeviceProcessEvents
 | where FileName =~ "schtasks.exe"
 | project ProcessCommandLine
+```
+Look for: `/TN "WindowsUpdateCheck"`
 
+**Flag 9 – Scheduled task target**
+- Parse the `/TR` parameter from the command line.
 
-Look for:
+### 🌐 Phase 5 — Command & Control
 
-/TN "WindowsUpdateCheck"
-
-Flag 9 – Scheduled Task Target
-
-Find /TR parameter in command line.
-
-🌐 Phase 5 — Command & Control
-Flag 10 – C2 IP
+**Flag 10 – C2 IP**
+```kql
 DeviceNetworkEvents
 | where DeviceName == "TARGET-VM"
 | where InitiatingProcessFolderPath has "ProgramData"
 | project RemoteIP, RemotePort
+```
 
-Flag 11 – C2 Port
+**Flag 11 – C2 port**
+- Use the same query and inspect `RemotePort`.
 
-Same query — check RemotePort.
+### 🔓 Phase 6 — Credential Access
 
-🔓 Phase 6 — Credential Access
-Flag 12 – Credential Dumping Tool
+**Flag 12 – Credential dumping tool**
+```kql
 DeviceProcessEvents
 | where ProcessCommandLine has "sekurlsa"
 | project FileName, ProcessCommandLine
+```
+Often observed: `mm.exe` (renamed mimikatz).
 
+**Flag 13 – Module used**
+- Inspect command lines for: `sekurlsa::logonpasswords`
 
-Often:
+### 📦 Phase 7 — Collection & Exfiltration
 
-mm.exe (renamed mimikatz)
-
-Flag 13 – Module Used
-
-Look inside command line:
-
-sekurlsa::logonpasswords
-
-📦 Phase 7 — Collection & Exfiltration
-Flag 14 – ZIP Archive
+**Flag 14 – ZIP archive**
+```kql
 DeviceFileEvents
 | where FileName endswith ".zip"
 | project FileName, FolderPath
+```
 
-Flag 15 – Cloud Service Used
+**Flag 15 – Cloud service used**
+```kql
 DeviceNetworkEvents
 | where RemoteUrl has "discord"
 | project RemoteUrl
+```
 
-🧹 Phase 8 — Anti-Forensics
-Flag 16 – First Log Cleared
+### 🧹 Phase 8 — Anti-Forensics
+
+**Flag 16 – First log cleared**
+```kql
 DeviceProcessEvents
 | where ProcessCommandLine has "wevtutil"
 | sort by TimeGenerated asc
+```
+Look for: `wevtutil cl security`
 
+### 👤 Phase 9 — Backdoor Account
 
-Look for:
-
-wevtutil cl security
-
-👤 Phase 9 — Backdoor Account
-Flag 17 – Hidden Admin User
+**Flag 17 – Hidden admin user**
+```kql
 DeviceProcessEvents
 | where ProcessCommandLine has "net user"
 | project ProcessCommandLine
+```
+Example: `net user support P@ssw0rd /add`
 
+### 📜 Phase 10 — Attack Script
 
-Example:
-
-net user support P@ssw0rd /add
-
-📜 Phase 10 — Attack Script
-Flag 18 – PowerShell Script
+**Flag 18 – PowerShell script**
+```kql
 DeviceProcessEvents
 | where ProcessCommandLine endswith ".ps1"
 | project ProcessCommandLine
+```
 
-🔁 Phase 11 — Lateral Movement
-Flag 19 – Target IP
+### 🔁 Phase 11 — Lateral Movement
+
+**Flag 19 – Target IP**
+```kql
 DeviceProcessEvents
 | where ProcessCommandLine has "mstsc"
 | project ProcessCommandLine
+```
 
-Flag 20 – Remote Access Tool Used
+**Flag 20 – Remote access tool used**
+- Likely: `mstsc.exe`
 
-Likely:
+---
 
-mstsc.exe
+## 🧰 Reusable Query Cheat Sheet
 
-🧰 Reusable Query Cheat Sheet
-Logons
+### Logons
+```kql
 DeviceLogonEvents
 | where TimeGenerated > ago(7d)
 | project TimeGenerated, AccountName, ActionType, RemoteIP
+```
 
-Processes
+### Processes
+```kql
 DeviceProcessEvents
 | where TimeGenerated > ago(7d)
 | project TimeGenerated, FileName, ProcessCommandLine
+```
 
-Files
+### Files
+```kql
 DeviceFileEvents
 | where TimeGenerated > ago(7d)
 | project FileName, FolderPath
+```
 
-Network
+### Network
+```kql
 DeviceNetworkEvents
 | where TimeGenerated > ago(7d)
 | project RemoteIP, RemotePort, RemoteUrl
+```
 
-🤖 Using AI to Accelerate Hunting
+---
+
+## 🤖 Using AI to Accelerate Threat Hunting
 
 You can:
 
-Export query results
+- Export query results
+- Upload CSV to ChatGPT/Claude
+- Ask AI to:
+  - Identify suspicious command usage
+  - Find credential dumping indicators
+  - Identify LOLBins
+  - Explain process chains
 
-Upload CSV to ChatGPT/Claude
-
-Ask:
-
-“Identify suspicious command usage”
-
-“Find credential dumping indicators”
-
-“Identify LOLBins”
-
-“Explain this process chain”
-
-⚠️ Always verify back in KQL.
+⚠️ Always verify findings back in KQL.
 
 AI is an assistant — not a replacement.
 
-🚀 Final Lessons & Career Impact
+---
+
+## 🚀 Final Lessons & Career Impact
 
 By completing a hunt like this, you demonstrate:
 
-Real log analysis capability
-
-Multi-table pivoting skill
-
-Attack chain understanding
-
-MITRE ATT&CK alignment
-
-Practical SOC-level investigation experience
+- Real log analysis capability
+- Multi-table pivoting skill
+- Attack chain understanding
+- MITRE ATT&CK alignment
+- Practical SOC-level investigation experience
 
 This is resume-ready experience.
 
-🎓 What You Should Now Be Able To Do
+---
 
-Filter massive log datasets
+## 🎓 What You Should Now Be Able To Do
 
-Identify suspicious IPs
+- Filter massive log datasets
+- Identify suspicious IPs
+- Detect credential dumping
+- Identify persistence mechanisms
+- Track C2 activity
+- Detect exfiltration channels
+- Recognize anti-forensics
+- Pivot between tables
+- Use `summarize` intelligently
+- Explain an attack chain end-to-end
 
-Detect credential dumping
+---
 
-Identify persistence mechanisms
-
-Track C2 activity
-
-Detect exfiltration channels
-
-Recognize anti-forensics
-
-Pivot between tables
-
-Use summarize intelligently
-
-Explain an attack chain end-to-end
-
-🏁 Closing
+## 🏁 Closing
 
 KQL is not about memorizing syntax.
 
 It’s about learning to think:
 
-“What evidence would this action leave behind — and in which table?”
+> “What evidence would this action leave behind — and in which table?”
 
-Master that…
-
-And you can hunt anything. 🔥
+Master that, and you can hunt anything. 🔥
