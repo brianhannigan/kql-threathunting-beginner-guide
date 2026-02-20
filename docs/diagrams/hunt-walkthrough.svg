@@ -1,40 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="400" viewBox="0 0 1400 400">
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0B1220"/>
-      <stop offset="1" stop-color="#0F1B33"/>
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#0f1b33"/>
     </linearGradient>
+
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#5b7aa6" stroke-opacity="0.12" stroke-width="1"/>
+    </pattern>
 
     <linearGradient id="pulse" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#67B8FF" stop-opacity="0"/>
-      <stop offset="0.5" stop-color="#67B8FF"/>
-      <stop offset="1" stop-color="#67B8FF" stop-opacity="0"/>
+      <stop offset="0" stop-color="#67b8ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#67b8ff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#67b8ff" stop-opacity="0"/>
     </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style>
+      .title { font: 700 22px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#eaf2ff; }
+      .sub   { font: 500 14px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#a8c3ea; }
+      .step  { font: 700 16px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#eaf2ff; }
+      .hint  { font: 600 14px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#8be9a8; }
+
+      /* CSS-based animation (works reliably when SVG is loaded via <img> on GitHub) */
+      .pulseLine {
+        stroke-dasharray: 180 1400;
+        animation: dashmove 3.8s linear infinite;
+      }
+      @keyframes dashmove {
+        from { stroke-dashoffset: 0; }
+        to   { stroke-dashoffset: -1400; }
+      }
+
+      .dot {
+        animation: dotglow 1.6s ease-in-out infinite alternate;
+      }
+      @keyframes dotglow {
+        from { opacity: 0.55; }
+        to   { opacity: 1; }
+      }
+    </style>
   </defs>
 
-  <rect width="1400" height="400" fill="url(#bg)" rx="20"/>
+  <rect width="1400" height="420" rx="22" fill="url(#bg)"/>
+  <rect width="1400" height="420" rx="22" fill="url(#grid)"/>
 
-  <!-- Timeline bar -->
-  <line x1="100" y1="200" x2="1300" y2="200"
-        stroke="url(#pulse)"
-        stroke-width="6"
-        stroke-dasharray="200 1400">
-    <animate attributeName="stroke-dashoffset"
-             from="0"
-             to="-1400"
-             dur="4s"
-             repeatCount="indefinite"/>
-  </line>
+  <text x="60" y="70" class="title">Animated Hunt Walkthrough</text>
+  <text x="60" y="95" class="sub">Hypothesis → Pivot → Timeline → ATT&amp;CK mapping (KQL investigation flow)</text>
 
-  <!-- Steps -->
-  <text x="120" y="150" fill="#EAF2FF" font-size="18" font-weight="bold">1. Scope Device</text>
-  <text x="380" y="150" fill="#EAF2FF" font-size="18" font-weight="bold">2. Pivot Logon</text>
-  <text x="640" y="150" fill="#EAF2FF" font-size="18" font-weight="bold">3. Analyze Process</text>
-  <text x="900" y="150" fill="#EAF2FF" font-size="18" font-weight="bold">4. Correlate Network</text>
-  <text x="1140" y="150" fill="#EAF2FF" font-size="18" font-weight="bold">5. Map to ATT&amp;CK</text>
+  <!-- main pulse line -->
+  <line x1="120" y1="230" x2="1280" y2="230" stroke="url(#pulse)" stroke-width="6" filter="url(#glow)" class="pulseLine"/>
 
-  <text x="350" y="280" fill="#8BE9A8" font-size="16">
-    DeviceLogonEvents → DeviceProcessEvents → DeviceNetworkEvents
-  </text>
+  <!-- step labels -->
+  <text x="120"  y="165" class="step">1. Scope</text>
+  <text x="370"  y="165" class="step">2. Logon Pivot</text>
+  <text x="640"  y="165" class="step">3. Process</text>
+  <text x="900"  y="165" class="step">4. Network</text>
+  <text x="1140" y="165" class="step">5. ATT&amp;CK</text>
 
+  <!-- step markers -->
+  <circle cx="140"  cy="230" r="8" fill="#8be9a8" class="dot"/>
+  <circle cx="420"  cy="230" r="8" fill="#67b8ff" class="dot"/>
+  <circle cx="700"  cy="230" r="8" fill="#67b8ff" class="dot"/>
+  <circle cx="980"  cy="230" r="8" fill="#67b8ff" class="dot"/>
+  <circle cx="1240" cy="230" r="8" fill="#ffd480" class="dot"/>
+
+  <text x="360" y="300" class="hint">DeviceLogonEvents → DeviceProcessEvents → DeviceNetworkEvents</text>
 </svg>
