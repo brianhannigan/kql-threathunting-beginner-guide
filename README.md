@@ -2,14 +2,12 @@
 <p align="center">
   <img src="docs/diagrams/hero.svg" alt="KQL Threat Hunting — Beginner Guide" width="100%" />
 </p>
----
 
 ## 🔎 Animated Hunt Walkthrough
 
 <p align="center">
   <img src="docs/diagrams/hunt-walkthrough.svg" alt="Animated KQL Hunt Walkthrough" width="100%" />
 </p>
-
 
 ---
 
@@ -62,6 +60,7 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
 ---
+# Coverage Heat Map
 <p align="center">
   <img src="docs/diagrams/coverage-heatmap.svg" width="80%" />
 </p>
