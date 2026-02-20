@@ -617,3 +617,29 @@ It’s about learning to think:
 > “What evidence would this action leave behind — and in which table?”
 
 Master that, and you can hunt anything. 🔥
+
+---
+---
+---
+---
+
+# Screenshot Panels (Executive Polish)
+
+> Drop 2–4 screenshots here once you capture them from Sentinel / Defender Advanced Hunting.
+
+## Example: Hunt Results (Logon Pivot)
+![Screen 01](docs/images/screen-01.png)
+
+## Example: Process → Network Correlation
+![Screen 02](docs/images/screen-02.png)
+
+## Example: Registry Tampering / Exclusions
+![Screen 03](docs/images/screen-03.png)
+
+---
+
+# Built By
+
+**Brian Hannigan**  
+Cybersecurity Engineer • Software Architect  
+Focus: Threat Hunting, Detection Engineering, and defensible investigation workflows
