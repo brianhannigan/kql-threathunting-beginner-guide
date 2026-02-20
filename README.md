@@ -548,22 +548,24 @@ It’s about learning to think:
 Master that, and you can hunt anything. 🔥
 
 ---
----
----
----
+## Screenshot Panels
 
-# Screenshot Panels
+<p align="center">
+  <img src="docs/images/screen-01.png" alt="Sentinel Logs — KQL Query + Results" width="100%" />
+</p>
 
-> Screenshots from Sentinel / Defender Advanced Hunting.
+<p align="center">
+  <img src="docs/images/screen-02.png" alt="Defender XDR — Advanced Hunting Results" width="100%" />
+</p>
 
-## Example: Hunt Results (Logon Pivot)
-![Screen 01](docs/images/screen-01.png)
+<p align="center">
+  <img src="docs/images/screen-03.png" alt="Defender for Endpoint — Device Timeline" width="100%" />
+</p>
 
-## Example: Process → Network Correlation
-![Screen 02](docs/images/screen-02.png)
+<p align="center">
+  <img src="docs/images/screen-04.png" alt="Microsoft Sentinel — Entity Page (Investigation View)" width="100%" />
+</p>
 
-## Example: Registry Tampering / Exclusions
-![Screen 03](docs/images/screen-03.png)
 
 ---
 
