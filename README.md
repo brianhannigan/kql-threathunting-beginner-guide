@@ -51,8 +51,21 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 | Command & Control | T1071 – Web Protocols | Suspicious outbound IP/domain | DeviceNetworkEvents | 🟢 High |
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
+---
+<p align="center">
+  <img src="docs/diagrams/coverage-heatmap.svg" width="80%" />
+</p>
 
 ---
+
+# 📈 Detection Maturity Model
+
+<p align="center">
+  <img src="docs/diagrams/detection-maturity-ladder.svg" width="80%" />
+</p>
+
+---
+
 
 # 🔍 Coverage Gap Analysis
 
@@ -74,6 +87,15 @@ The following telemetry and detection gaps were identified:
 5. Track detection false-positive rate
 
 ---
+
+# 🔎 Animated Hunt Walkthrough
+
+<p align="center">
+  <img src="docs/diagrams/hunt-walkthrough.svg" width="100%" />
+</p>
+
+---
+
 
 
 
