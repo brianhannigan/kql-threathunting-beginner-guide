@@ -1,3 +1,107 @@
+![KQL Threat Hunting Hero](docs/diagrams/hero.svg)
+
+![KQL](https://img.shields.io/badge/KQL-Threat_Hunting-2b6cb0?style=for-the-badge)
+![Microsoft Sentinel](https://img.shields.io/badge/Microsoft-Sentinel-0078D4?style=for-the-badge&logo=microsoft)
+![Defender XDR](https://img.shields.io/badge/Microsoft-Defender_XDR-00A4EF?style=for-the-badge&logo=microsoft)
+![MITRE](https://img.shields.io/badge/MITRE-ATT%26CK-111827?style=for-the-badge)
+![Level](https://img.shields.io/badge/Level-Beginner_%E2%86%92_Practitioner-16a34a?style=for-the-badge)
+
+---
+
+## Overview
+
+**KQL Log Analysis & Threat Hunting** is a practical, end-to-end guide for learning **Kusto Query Language (KQL)** in Microsoft security environments (Microsoft Sentinel, Microsoft Defender XDR, and Log Analytics).
+
+This repo is designed to help you:
+- Think like an analyst (scope → pivot → validate → document)
+- Build repeatable KQL “muscle memory”
+- Translate hunts into **detections** (analytics rules) and **coverage**
+
+---
+
+## Demo: What You’ll Be Able To Do
+
+> Hunt suspicious behavior across identity, endpoint, process, network, file, and registry telemetry — and produce a defensible investigation narrative.
+
+### Hunting Lifecycle (Visual)
+![Hunting Lifecycle](docs/diagrams/hunt-flow.svg)
+
+---
+
+# Core Capabilities
+
+| Category | Capability |
+|---|---|
+| KQL Fundamentals | Filtering, projection, summarization, time-scoping |
+| Threat Hunting | Multi-table pivots and hypothesis-driven investigation |
+| Evidence Chaining | Logon → Process → Network → Registry → File correlation |
+| MITRE Mapping | Translate behaviors into ATT&CK tactics/techniques |
+| Detection Engineering | Convert hunts into rule logic + tuning guidance |
+| Reporting | Produce analyst-ready notes, timelines, and findings |
+
+---
+
+# Evidence / Attack Chain Model
+
+![Evidence Chain](docs/diagrams/attack-chain.svg)
+
+**Principle:** Don’t hunt in one table. Build a chain:
+- **Logon** (who / where from)
+- **Process** (what executed)
+- **Network** (where it talked)
+- **Registry** (what changed)
+- **File** (what staged / dropped)
+
+---
+
+# Data Sources Covered (Microsoft Tables)
+
+![Data Sources](docs/diagrams/data-sources.svg)
+
+### Key Tables You’ll Use
+- `DeviceLogonEvents`
+- `DeviceProcessEvents`
+- `DeviceNetworkEvents`
+- `DeviceFileEvents`
+- `DeviceRegistryEvents`
+
+---
+
+# Detection Coverage Matrix (Starter)
+
+| MITRE Tactic | What you hunt | Primary tables |
+|---|---|---|
+| Initial Access | Suspicious remote logons / RDP / anomalous IPs | `DeviceLogonEvents` |
+| Execution | PowerShell/LOLBin patterns, encoded commands | `DeviceProcessEvents` |
+| Discovery | `whoami`, `arp -a`, `net view`, enumeration | `DeviceProcessEvents` |
+| Defense Evasion | Defender exclusions, tampering | `DeviceRegistryEvents` |
+| Persistence | Scheduled tasks, startup patterns | `DeviceProcessEvents`, `DeviceRegistryEvents` |
+| Command & Control | Suspicious outbound destinations / ports | `DeviceNetworkEvents` |
+| Collection/Exfil | ZIP staging, cloud endpoints, bulk transfer signals | `DeviceFileEvents`, `DeviceNetworkEvents` |
+
+---
+
+# Guide
+
+## Table of Contents
+- [Why KQL Matters](#why-kql-matters)
+- [What Logs Actually Are](#what-logs-actually-are)
+- [How Logs Are Stored (Log Analytics Workspace)](#how-logs-are-stored-log-analytics-workspace)
+- [Core Security Tables Explained](#core-security-tables-explained)
+- [KQL Fundamentals](#kql-fundamentals)
+- [Investigation Workflow Framework](#investigation-workflow-framework)
+- [Full Threat Hunt Walkthrough (20 Flags)](#full-threat-hunt-walkthrough-20-flags)
+- [Reusable Query Cheat Sheet](#reusable-query-cheat-sheet)
+- [Using AI to Accelerate Threat Hunting](#using-ai-to-accelerate-threat-hunting)
+- [Final Lessons & Career Impact](#final-lessons--career-impact)
+- [What You Should Now Be Able To Do](#what-you-should-now-be-able-to-do)
+- [Closing](#closing)
+
+---
+
+
+---
+---
 # 🔎 KQL Log Analysis & Threat Hunting
 ## Complete Beginner-to-Practitioner Guide
 
