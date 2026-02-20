@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" role="img" aria-label="Data sources and tables map">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#0F1B33"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#9FB3C8" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#67B8FF"/>
+      <stop offset="1" stop-color="#8BE9A8"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="20" width="1552" height="520" rx="28" fill="url(#bg)" stroke="#A8B7CC" stroke-opacity="0.12"/>
+  <rect x="36" y="32" width="1528" height="496" rx="22" fill="url(#grid)"/>
+
+  <text x="60" y="86" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial"
+        font-size="28" font-weight="900" fill="#EAF2FF">Microsoft Security Data Sources</text>
+  <text x="60" y="116" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial"
+        font-size="14" font-weight="600" fill="#CFE0F7" opacity="0.9">
+    Where the tables come from (Defender XDR / Log Analytics / Sentinel)
+  </text>
+
+  <!-- Left: sources -->
+  <g font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial">
+    <g transform="translate(80 160)">
+      <rect width="420" height="140" rx="18" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="6" height="104" rx="3" fill="url(#accent)" opacity="0.9"/>
+      <text x="40" y="54" font-size="18" font-weight="900" fill="#EAF2FF">Microsoft Defender XDR</text>
+      <text x="40" y="82" font-size="13" font-weight="600" fill="#CFE0F7" opacity="0.9">Advanced Hunting / MDE telemetry</text>
+      <text x="40" y="110" font-size="12" font-weight="600" fill="#AFC3DE" opacity="0.9">
+        Device* tables (logon, process, network, file, registry)
+      </text>
+    </g>
+
+    <g transform="translate(80 320)">
+      <rect width="420" height="140" rx="18" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="6" height="104" rx="3" fill="url(#accent)" opacity="0.9"/>
+      <text x="40" y="54" font-size="18" font-weight="900" fill="#EAF2FF">Log Analytics Workspace</text>
+      <text x="40" y="82" font-size="13" font-weight="600" fill="#CFE0F7" opacity="0.9">Central store for queries + retention</text>
+      <text x="40" y="110" font-size="12" font-weight="600" fill="#AFC3DE" opacity="0.9">
+        Kusto engine, custom tables, ingestion
+      </text>
+    </g>
+  </g>
+
+  <!-- Right: table families -->
+  <g transform="translate(560 160)" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial">
+    <rect width="980" height="300" rx="22" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+    <text x="28" y="54" font-size="18" font-weight="900" fill="#EAF2FF">Core Tables (Beginner Guide)</text>
+    <text x="28" y="80" font-size="13" font-weight="600" fill="#CFE0F7" opacity="0.9">Most common pivot points for investigations</text>
+
+    <!-- Table list -->
+    <g font-size="14" font-weight="700" fill="#CFE0F7">
+      <rect x="28" y="110" width="924" height="46" rx="14" fill="#111A2E" stroke="#A8B7CC" stroke-opacity="0.12"/>
+      <text x="48" y="140">DeviceLogonEvents</text>
+      <text x="520" y="140" opacity="0.85">Authentication, RDP, account anomalies</text>
+
+      <rect x="28" y="164" width="924" height="46" rx="14" fill="#111A2E" stroke="#A8B7CC" stroke-opacity="0.12"/>
+      <text x="48" y="194">DeviceProcessEvents</text>
+      <text x="520" y="194" opacity="0.85">Execution, PowerShell, LOLBins, tasks</text>
+
+      <rect x="28" y="218" width="924" height="46" rx="14" fill="#111A2E" stroke="#A8B7CC" stroke-opacity="0.12"/>
+      <text x="48" y="248">DeviceNetworkEvents</text>
+      <text x="520" y="248" opacity="0.85">Outbound connections, ports, domains</text>
+
+      <rect x="28" y="272" width="924" height="46" rx="14" fill="#111A2E" stroke="#A8B7CC" stroke-opacity="0.12"/>
+      <text x="48" y="302">DeviceFileEvents</text>
+      <text x="520" y="302" opacity="0.85">Staging, drops, archives, exfil prep</text>
+
+      <rect x="28" y="326" width="924" height="46" rx="14" fill="#111A2E" stroke="#A8B7CC" stroke-opacity="0.12"/>
+      <text x="48" y="356">DeviceRegistryEvents</text>
+      <text x="520" y="356" opacity="0.85">Defender tampering, persistence keys</text>
+    </g>
+  </g>
+
+  <!-- Connectors -->
+  <g opacity="0.45">
+    <path d="M500 230 C560 230, 560 230, 560 230" stroke="url(#accent)" stroke-width="4" fill="none"/>
+    <path d="M500 390 C560 390, 560 390, 560 390" stroke="url(#accent)" stroke-width="4" fill="none"/>
+    <circle cx="500" cy="230" r="6" fill="#67B8FF"/>
+    <circle cx="500" cy="390" r="6" fill="#8BE9A8"/>
+  </g>
+
+  <text x="60" y="520" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial"
+        font-size="12" fill="#AFC3DE" opacity="0.65">docs/diagrams/data-sources.svg</text>
+</svg>

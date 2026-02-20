@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" role="img" aria-label="Evidence chain diagram">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#0F1B33"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#9FB3C8" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#67B8FF"/>
+      <stop offset="1" stop-color="#8BE9A8"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#CFE0F7" opacity="0.45"/>
+    </marker>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect x="24" y="20" width="1552" height="520" rx="28" fill="url(#bg)" stroke="#A8B7CC" stroke-opacity="0.12"/>
+  <rect x="36" y="32" width="1528" height="496" rx="22" fill="url(#grid)"/>
+
+  <text x="60" y="86" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial"
+        font-size="28" font-weight="900" fill="#EAF2FF">Evidence / Attack Chain</text>
+  <text x="60" y="116" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial"
+        font-size="14" font-weight="600" fill="#CFE0F7" opacity="0.9">
+    Build investigations by chaining pivots across tables (logon → process → network → registry → file)
+  </text>
+
+  <!-- Main chain rail -->
+  <path d="M120 300 H1480" stroke="url(#accent)" stroke-width="6" stroke-linecap="round" opacity="0.18"/>
+  <path d="M120 300 H1480" stroke="url(#accent)" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="140 1400" filter="url(#softGlow)" opacity="0.9">
+    <animate attributeName="stroke-dashoffset" from="0" to="-1480" dur="3.8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.12;0.7;0.12" dur="3.8s" repeatCount="indefinite"/>
+  </path>
+
+  <g font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial">
+    <!-- Node template repeated -->
+    <g transform="translate(120 190)">
+      <rect width="250" height="180" rx="20" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="8" height="144" rx="4" fill="#67B8FF" opacity="0.9"/>
+      <text x="42" y="56" font-size="16" font-weight="900" fill="#EAF2FF">Logon</text>
+      <text x="42" y="82" font-size="12" font-weight="700" fill="#AFC3DE" opacity="0.95">DeviceLogonEvents</text>
+      <text x="42" y="116" font-size="12" font-weight="600" fill="#CFE0F7" opacity="0.9">
+        Who logged in? From where? RDP? New device?
+      </text>
+    </g>
+
+    <g transform="translate(410 190)">
+      <rect width="250" height="180" rx="20" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="8" height="144" rx="4" fill="#67B8FF" opacity="0.85"/>
+      <text x="42" y="56" font-size="16" font-weight="900" fill="#EAF2FF">Process</text>
+      <text x="42" y="82" font-size="12" font-weight="700" fill="#AFC3DE" opacity="0.95">DeviceProcessEvents</text>
+      <text x="42" y="116" font-size="12" font-weight="600" fill="#CFE0F7" opacity="0.9">
+        What executed? PowerShell? LOLBins? Scheduled tasks?
+      </text>
+    </g>
+
+    <g transform="translate(700 190)">
+      <rect width="250" height="180" rx="20" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="8" height="144" rx="4" fill="#8BE9A8" opacity="0.85"/>
+      <text x="42" y="56" font-size="16" font-weight="900" fill="#EAF2FF">Network</text>
+      <text x="42" y="82" font-size="12" font-weight="700" fill="#AFC3DE" opacity="0.95">DeviceNetworkEvents</text>
+      <text x="42" y="116" font-size="12" font-weight="600" fill="#CFE0F7" opacity="0.9">
+        Where did it connect? Domain, IP, port, frequency?
+      </text>
+    </g>
+
+    <g transform="translate(990 190)">
+      <rect width="250" height="180" rx="20" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="8" height="144" rx="4" fill="#8BE9A8" opacity="0.8"/>
+      <text x="42" y="56" font-size="16" font-weight="900" fill="#EAF2FF">Registry</text>
+      <text x="42" y="82" font-size="12" font-weight="700" fill="#AFC3DE" opacity="0.95">DeviceRegistryEvents</text>
+      <text x="42" y="116" font-size="12" font-weight="600" fill="#CFE0F7" opacity="0.9">
+        Defender tampering? persistence keys? policy changes?
+      </text>
+    </g>
+
+    <g transform="translate(1280 190)">
+      <rect width="250" height="180" rx="20" fill="#0E1730" stroke="#A8B7CC" stroke-opacity="0.16"/>
+      <rect x="18" y="18" width="8" height="144" rx="4" fill="#67B8FF" opacity="0.75"/>
+      <text x="42" y="56" font-size="16" font-weight="900" fill="#EAF2FF">File</text>
+      <text x="42" y="82" font-size="12" font-weight="700" fill="#AFC3DE" opacity="0.95">DeviceFileEvents</text>
+      <text x="42" y="116" font-size="12" font-weight="600" fill="#CFE0F7" opacity="0.9">
+        What was dropped/staged? archives? suspicious paths?
+      </text>
+    </g>
+  </g>
+
+  <!-- arrows between nodes -->
+  <g opacity="0.55">
+    <path d="M370 300 L410 300" stroke="#CFE0F7" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M660 300 L700 300" stroke="#CFE0F7" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M950 300 L990 300" stroke="#CFE0F7" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M1240 300 L1280 300" stroke="#CFE0F7" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+
+  <text x="60" y="520" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial"
+        font-size="12" fill="#AFC3DE" opacity="0.65">docs/diagrams/attack-chain.svg</text>
+</svg>
