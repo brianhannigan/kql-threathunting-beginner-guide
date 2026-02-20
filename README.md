@@ -562,9 +562,9 @@ Master that, and you can hunt anything. 🔥
 ---
 ---
 
-# Screenshot Panels (Executive Polish)
+# Screenshot Panels
 
-> Drop 2–4 screenshots here once you capture them from Sentinel / Defender Advanced Hunting.
+> Screenshots from Sentinel / Defender Advanced Hunting.
 
 ## Example: Hunt Results (Logon Pivot)
 ![Screen 01](docs/images/screen-01.png)
