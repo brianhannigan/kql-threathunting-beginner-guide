@@ -37,6 +37,46 @@ A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Mic
 
 ---
 
+# 🛡 Detection Coverage Matrix
+
+This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and operational maturity.
+
+| MITRE Tactic | Technique | Detection Strategy | Primary Tables | Maturity |
+|--------------|-----------|-------------------|---------------|----------|
+| Initial Access | T1021 – Remote Services | RDP anomaly detection | DeviceLogonEvents | 🟡 Medium |
+| Execution | T1059 – PowerShell | Command-line keyword detection | DeviceProcessEvents | 🟢 High |
+| Persistence | T1547 – Logon Autostart | Registry monitoring | DeviceRegistryEvents | 🟡 Medium |
+| Defense Evasion | T1562 – Impair Defenses | Defender exclusion detection | DeviceRegistryEvents | 🟢 High |
+| Discovery | T1087 – Account Discovery | Enumeration pattern detection | DeviceProcessEvents | 🟡 Medium |
+| Command & Control | T1071 – Web Protocols | Suspicious outbound IP/domain | DeviceNetworkEvents | 🟢 High |
+| Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
+| Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
+
+---
+
+# 🔍 Coverage Gap Analysis
+
+The following telemetry and detection gaps were identified:
+
+- ❌ No DNS telemetry integrated
+- ❌ No Azure AD Sign-In logs correlated
+- ❌ No Email security logs mapped
+- ❌ No UEBA/behavior-based anomaly modeling
+- ❌ No ML-based frequency deviation detection
+- ❌ No cross-tenant correlation
+
+## Strategic Next Steps
+
+1. Integrate Azure AD SignInLogs
+2. Add DNS table correlation
+3. Introduce behavioral baselining (frequency + rarity scoring)
+4. Build analytics rules from high-confidence hunts
+5. Track detection false-positive rate
+
+---
+
+
+
 ## What This Repo Teaches
 
 | Skill | You’ll Learn |
