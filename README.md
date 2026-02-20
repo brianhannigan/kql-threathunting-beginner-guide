@@ -99,33 +99,6 @@ This repo is designed to help you:
 
 ---
 
-
----
----
-# 🔎 KQL Log Analysis & Threat Hunting
-## Complete Beginner-to-Practitioner Guide
-
-A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
-
----
-
-## 📚 Table of Contents
-
-- [Why KQL Matters](#-why-kql-matters)
-- [What Logs Actually Are](#-what-logs-actually-are)
-- [How Logs Are Stored (Log Analytics Workspace)](#-how-logs-are-stored-log-analytics-workspace)
-- [Core Security Tables Explained](#-core-security-tables-explained)
-- [KQL Fundamentals](#-kql-fundamentals)
-- [Investigation Workflow Framework](#-investigation-workflow-framework)
-- [Full Threat Hunt Walkthrough (20 Flags)](#-full-threat-hunt-walkthrough-20-flags)
-- [Reusable Query Cheat Sheet](#-reusable-query-cheat-sheet)
-- [Using AI to Accelerate Threat Hunting](#-using-ai-to-accelerate-threat-hunting)
-- [Final Lessons & Career Impact](#-final-lessons--career-impact)
-- [What You Should Now Be Able To Do](#-what-you-should-now-be-able-to-do)
-- [Closing](#-closing)
-
----
-
 ## 🎯 Why KQL Matters
 
 If you want to work in:
