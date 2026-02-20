@@ -20,7 +20,8 @@
   <img src="https://img.shields.io/badge/Level-Beginner_%E2%86%92_Practitioner-16a34a?style=for-the-badge" alt="Level" />
 </p>
 
-<hr/>
+---
+
 ## Executive Overview
 
 This repository demonstrates:
@@ -30,9 +31,31 @@ This repository demonstrates:
 - MITRE ATT&CK alignment
 - Detection engineering translation
 - Coverage gap assessment
+- Operational maturity modeling
 
-The goal is not just to query logs —
+The goal is not just to query logs —  
 but to design defensible detection strategy.
+
+---
+
+## Scope
+
+This repository focuses on **endpoint telemetry and Microsoft-native security tooling**, including:
+
+- Microsoft Defender XDR
+- Microsoft Sentinel
+- Log Analytics Workspace
+- Azure-native log pipelines
+
+It does **not** include:
+
+- Third-party EDR platforms
+- Email security telemetry
+- DNS-only logging environments
+- SOAR automation pipelines
+- Full UEBA behavioral modeling
+
+The intent is to demonstrate structured hunting and detection design within Microsoft ecosystems.
 
 ---
 
@@ -43,39 +66,40 @@ A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Mic
 
 ---
 
-# 🛡 Detection Coverage Matrix
+## 🛡 Detection Coverage Matrix
 
 This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and operational maturity.
 
 | MITRE Tactic | Technique | Detection Strategy | Primary Tables | Maturity |
 |--------------|-----------|-------------------|---------------|----------|
 | Initial Access | T1021 – Remote Services | RDP anomaly detection | DeviceLogonEvents | 🟡 Medium |
-| Execution | T1059 – PowerShell | Command-line keyword detection | DeviceProcessEvents | 🟢 High |
+| Execution | T1059 – PowerShell | Command-line analysis | DeviceProcessEvents | 🟢 High |
 | Persistence | T1547 – Logon Autostart | Registry monitoring | DeviceRegistryEvents | 🟡 Medium |
 | Defense Evasion | T1562 – Impair Defenses | Defender exclusion detection | DeviceRegistryEvents | 🟢 High |
 | Discovery | T1087 – Account Discovery | Enumeration pattern detection | DeviceProcessEvents | 🟡 Medium |
 | Command & Control | T1071 – Web Protocols | Suspicious outbound IP/domain | DeviceNetworkEvents | 🟢 High |
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
+
 ---
 
-
-# Coverage Heat Map
-<p align="center">
-  <img src="docs/diagrams/coverage-heatmap.svg" width="80%" />
-</p>
----
-
-# 📈 Detection Maturity Model
+## 📊 Coverage Heat Map
 
 <p align="center">
-  <img src="docs/diagrams/detection-maturity-ladder.svg" width="80%" />
+  <img src="docs/diagrams/coverage-heatmap.svg" alt="Coverage Heat Map" width="80%" />
 </p>
 
 ---
 
+## 📈 Detection Maturity Model
 
-# 🔍 Coverage Gap Analysis
+<p align="center">
+  <img src="docs/diagrams/detection-maturity-ladder.svg" alt="Detection Maturity Ladder" width="80%" />
+</p>
+
+---
+
+## 🔍 Coverage Gap Analysis
 
 The following telemetry and detection gaps were identified:
 
@@ -85,8 +109,20 @@ The following telemetry and detection gaps were identified:
 - ❌ No UEBA/behavior-based anomaly modeling
 - ❌ No ML-based frequency deviation detection
 - ❌ No cross-tenant correlation
+
 ---
-## Visual Overview
+
+## Strategic Next Steps
+
+1. Integrate Azure AD SignInLogs  
+2. Add DNS table correlation  
+3. Introduce behavioral baselining (frequency + rarity scoring)  
+4. Build analytics rules from high-confidence hunts  
+5. Track detection false-positive rate  
+
+---
+
+## 🔬 Visual Investigation Architecture
 
 <p align="center">
   <img src="docs/diagrams/hunt-flow.svg" alt="Threat Hunting Lifecycle" width="100%" />
@@ -102,16 +138,6 @@ The following telemetry and detection gaps were identified:
 
 ---
 
-
-## Strategic Next Steps
-
-1. Integrate Azure AD SignInLogs
-2. Add DNS table correlation
-3. Introduce behavioral baselining (frequency + rarity scoring)
-4. Build analytics rules from high-confidence hunts
-5. Track detection false-positive rate
-
----
 
 ## What This Repo Teaches
 
@@ -132,17 +158,17 @@ The following telemetry and detection gaps were identified:
 - [How Logs Are Stored (Log Analytics Workspace)](#how-logs-are-stored-log-analytics-workspace)
 - [Core Security Tables Explained](#core-security-tables-explained)
 - [KQL Fundamentals](#kql-fundamentals)
-- [Investigation Workflow Framework](#investigation-workflow-framework)
-- [Full Threat Hunt Walkthrough (20 Flags)](#full-threat-hunt-walkthrough-20-flags)
-- [Reusable Query Cheat Sheet](#reusable-query-cheat-sheet)
-- [Using AI to Accelerate Threat Hunting](#using-ai-to-accelerate-threat-hunting)
-- [Final Lessons & Career Impact](#final-lessons--career-impact)
-- [What You Should Now Be Able To Do](#what-you-should-now-be-able-to-do)
-- [Closing](#closing)
+- [Investigation Workflow Framework](#-investigation-workflow-framework)
+- [Full Threat Hunt Walkthrough (20 Flags)](#-full-threat-hunt-walkthrough-20-flags)
+- [Reusable Query Cheat Sheet](#-reusable-query-cheat-sheet)
+- [Using AI to Accelerate Threat Hunting](#-using-ai-to-accelerate-threat-hunting)
+- [Final Lessons & Career Impact](#-final-lessons--career-impact)
+- [What You Should Now Be Able To Do](#-what-you-should-now-be-able-to-do)
+- [Closing](#-closing)
 
 ---
 
-## Guide
+# 📘 Guide
 
 ## Why KQL Matters
 
@@ -308,38 +334,46 @@ DeviceLogonEvents
 ```
 
 ### 3) Control time
+
 **Last 24 hours:**
 ```kql
+DeviceLogonEvents
 | where TimeGenerated > ago(1d)
 ```
 
 **Specific range:**
 ```kql
+DeviceLogonEvents
 | where TimeGenerated between (datetime(2025-01-01) .. datetime(2025-01-02))
 ```
 
 ### 4) Reduce columns with `project`
 ```kql
+DeviceLogonEvents
 | project TimeGenerated, AccountName, RemoteIP, ActionType
 ```
 
 ### 5) Count and summarize activity
 ```kql
+DeviceLogonEvents
 | summarize count() by RemoteIP
 ```
 
 Rename count field:
 ```kql
+DeviceLogonEvents
 | summarize LoginAttempts=count() by RemoteIP
 ```
 
 ### 6) Sort results
 ```kql
+DeviceLogonEvents
 | sort by TimeGenerated asc
 ```
 
 ### 7) Show distinct values
 ```kql
+DeviceRegistryEvents
 | distinct RegistryValueName
 ```
 
@@ -401,7 +435,10 @@ DeviceProcessEvents
 | where ProcessCommandLine has "arp"
 | project TimeGenerated, ProcessCommandLine
 ```
+
 Example found: `arp -a`
+
+---
 
 ### 🛡️ Phase 3 — Defense Evasion
 
@@ -412,6 +449,7 @@ DeviceFileEvents
 | project TimeGenerated, FolderPath, FileName
 | sort by TimeGenerated asc
 ```
+
 Look for suspicious directories like: `C:\ProgramData\WindowsCache\`
 
 **Flag 5 – Defender extension exclusions**
@@ -420,7 +458,6 @@ DeviceRegistryEvents
 | where RegistryKey has "Exclusions"
 | distinct RegistryValueName
 ```
-Count suspicious exclusions.
 
 **Flag 6 – Defender folder exclusion**
 ```kql
@@ -436,6 +473,8 @@ DeviceProcessEvents
 | project ProcessCommandLine
 ```
 
+---
+
 ### ♻️ Phase 4 — Persistence
 
 **Flag 8 – Scheduled task name**
@@ -444,10 +483,13 @@ DeviceProcessEvents
 | where FileName =~ "schtasks.exe"
 | project ProcessCommandLine
 ```
+
 Look for: `/TN "WindowsUpdateCheck"`
 
 **Flag 9 – Scheduled task target**
-- Parse the `/TR` parameter from the command line.
+Parse the `/TR` parameter from the command line.
+
+---
 
 ### 🌐 Phase 5 — Command & Control
 
@@ -460,7 +502,9 @@ DeviceNetworkEvents
 ```
 
 **Flag 11 – C2 port**
-- Use the same query and inspect `RemotePort`.
+Use the same query and inspect `RemotePort`.
+
+---
 
 ### 🔓 Phase 6 — Credential Access
 
@@ -470,10 +514,13 @@ DeviceProcessEvents
 | where ProcessCommandLine has "sekurlsa"
 | project FileName, ProcessCommandLine
 ```
+
 Often observed: `mm.exe` (renamed mimikatz).
 
 **Flag 13 – Module used**
-- Inspect command lines for: `sekurlsa::logonpasswords`
+Inspect command lines for: `sekurlsa::logonpasswords`
+
+---
 
 ### 📦 Phase 7 — Collection & Exfiltration
 
@@ -491,6 +538,8 @@ DeviceNetworkEvents
 | project RemoteUrl
 ```
 
+---
+
 ### 🧹 Phase 8 — Anti-Forensics
 
 **Flag 16 – First log cleared**
@@ -499,7 +548,10 @@ DeviceProcessEvents
 | where ProcessCommandLine has "wevtutil"
 | sort by TimeGenerated asc
 ```
+
 Look for: `wevtutil cl security`
+
+---
 
 ### 👤 Phase 9 — Backdoor Account
 
@@ -509,7 +561,10 @@ DeviceProcessEvents
 | where ProcessCommandLine has "net user"
 | project ProcessCommandLine
 ```
+
 Example: `net user support P@ssw0rd /add`
+
+---
 
 ### 📜 Phase 10 — Attack Script
 
@@ -519,6 +574,8 @@ DeviceProcessEvents
 | where ProcessCommandLine endswith ".ps1"
 | project ProcessCommandLine
 ```
+
+---
 
 ### 🔁 Phase 11 — Lateral Movement
 
@@ -530,7 +587,7 @@ DeviceProcessEvents
 ```
 
 **Flag 20 – Remote access tool used**
-- Likely: `mstsc.exe`
+Likely: `mstsc.exe`
 
 ---
 
@@ -578,8 +635,7 @@ You can:
   - Identify LOLBins
   - Explain process chains
 
-⚠️ Always verify findings back in KQL.
-
+⚠️ Always verify findings back in KQL.  
 AI is an assistant — not a replacement.
 
 ---
@@ -624,9 +680,8 @@ It’s about learning to think:
 Master that, and you can hunt anything. 🔥
 
 ---
----
 
-# 📸 Investigation Screens (Workflow in Action)
+## 📸 Investigation Screens (Workflow in Action)
 
 Below are representative views from Microsoft Sentinel and Microsoft Defender XDR environments.  
 Each panel reflects a stage in the investigation lifecycle.
@@ -636,11 +691,6 @@ Each panel reflects a stage in the investigation lifecycle.
 ## 1️⃣ Sentinel Logs — Query & Results Pivot
 
 > Hypothesis-driven hunting using KQL in Microsoft Sentinel.
-
-This panel demonstrates:
-- Structured time scoping  
-- Targeted filtering (`where`)  
-- Result pivoting for rapid anomaly identification  
 
 <p align="center">
   <img src="docs/images/screen-01.png" alt="Sentinel Logs — KQL Query and Results" width="90%" />
@@ -652,11 +702,6 @@ This panel demonstrates:
 
 > Cross-table evidence chaining (Process → Network → Account).
 
-This panel demonstrates:
-- Multi-table hunting  
-- Command-line inspection  
-- Rapid process-to-network correlation  
-
 <p align="center">
   <img src="docs/images/screen-02.png" alt="Defender XDR — Advanced Hunting Results" width="90%" />
 </p>
@@ -666,11 +711,6 @@ This panel demonstrates:
 ## 3️⃣ Defender for Endpoint — Device Timeline
 
 > Timeline reconstruction for attacker behavior analysis.
-
-This panel demonstrates:
-- Event sequence visualization  
-- Suspicious activity clustering  
-- Temporal investigation validation  
 
 <p align="center">
   <img src="docs/images/screen-03.png" alt="Defender for Endpoint — Device Timeline" width="90%" />
@@ -682,16 +722,9 @@ This panel demonstrates:
 
 > Contextual investigation with entity-based intelligence.
 
-This panel demonstrates:
-- Alerts over time  
-- Account/Host relationship mapping  
-- MITRE ATT&CK contextualization  
-
 <p align="center">
   <img src="docs/images/screen-04.png" alt="Microsoft Sentinel — Entity Investigation Page" width="90%" />
 </p>
-
----
 
 ---
 
