@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="400">
+  <rect width="900" height="400" fill="#0F1B33"/>
+
+  <text x="40" y="40" fill="#EAF2FF" font-size="20" font-weight="bold">
+    Detection Coverage Heatmap
+  </text>
+
+  <!-- Rows -->
+  <rect x="200" y="80" width="500" height="40" fill="#16a34a"/>
+  <text x="60" y="105" fill="#EAF2FF">Execution</text>
+
+  <rect x="200" y="130" width="350" height="40" fill="#eab308"/>
+  <text x="60" y="155" fill="#EAF2FF">Persistence</text>
+
+  <rect x="200" y="180" width="520" height="40" fill="#16a34a"/>
+  <text x="60" y="205" fill="#EAF2FF">C2</text>
+
+  <rect x="200" y="230" width="200" height="40" fill="#dc2626"/>
+  <text x="60" y="255" fill="#EAF2FF">Exfiltration</text>
+
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450">
+  <rect width="900" height="450" fill="#0B1220"/>
+
+  <text x="50" y="60" fill="#EAF2FF" font-size="22" font-weight="bold">
+    Detection Maturity Ladder
+  </text>
+
+  <!-- Steps -->
+  <rect x="150" y="100" width="600" height="60" fill="#334155"/>
+  <text x="200" y="140" fill="#EAF2FF">Level 1 – Manual Hunting</text>
+
+  <rect x="150" y="180" width="600" height="60" fill="#475569"/>
+  <text x="200" y="220" fill="#EAF2FF">Level 2 – Query-Based Detection</text>
+
+  <rect x="150" y="260" width="600" height="60" fill="#64748b"/>
+  <text x="200" y="300" fill="#EAF2FF">Level 3 – Automated Analytics Rules</text>
+
+  <rect x="150" y="340" width="600" height="60" fill="#94a3b8"/>
+  <text x="200" y="380" fill="#0B1220">Level 4 – Behavioral / ML Detection</text>
+
+</svg>
