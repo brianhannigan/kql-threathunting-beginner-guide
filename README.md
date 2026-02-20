@@ -100,7 +100,9 @@ The intent is to demonstrate structured hunting and detection design within Micr
 A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
 
 ---
+
 ## 🛡 Detection Coverage Matrix
+
 <details>
 <summary>Click to expand</summary>
 
@@ -116,6 +118,7 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 | Command & Control | T1071 – Web Protocols | Suspicious outbound IP/domain | DeviceNetworkEvents | 🟢 High |
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
+
 </details>
 
 
@@ -424,6 +427,9 @@ Use this sequence during hunts:
 
 ## 🧪 Full Threat Hunt Walkthrough (20 Flags)
 
+<details>
+  <summary><strong>Click to expand</strong></summary>
+
 > Scenario: Investigate suspicious activity on `TARGET-VM` and recover key attack artifacts.
 
 ### 🔐 Phase 1 — Initial Access
@@ -609,8 +615,12 @@ DeviceProcessEvents
 Likely: `mstsc.exe`
 
 ---
+</details>
 
 ## 🧰 Reusable Query Cheat Sheet
+
+<details>
+  <summary><strong>Click to expand</strong></summary> 
 
 ### Logons
 ```kql
@@ -639,8 +649,8 @@ DeviceNetworkEvents
 | where TimeGenerated > ago(7d)
 | project RemoteIP, RemotePort, RemoteUrl
 ```
-
 ---
+</details>
 
 ## 🤖 Using AI to Accelerate Threat Hunting
 
@@ -702,6 +712,9 @@ Master that, and you can hunt anything. 🔥
 
 ## 📸 Investigation Screens (Workflow in Action)
 
+<details>
+  <summary><strong>Click to expand</strong></summary>
+
 Below are representative views from Microsoft Sentinel and Microsoft Defender XDR environments.  
 Each panel reflects a stage in the investigation lifecycle.
 
@@ -746,6 +759,7 @@ Each panel reflects a stage in the investigation lifecycle.
 </p>
 
 ---
+</details>
 
 # Built By
 
