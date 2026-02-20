@@ -117,7 +117,7 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
 </details>
----
+
 
 ## 📊 Coverage Heat Map
 
