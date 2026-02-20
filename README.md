@@ -21,27 +21,25 @@
 </p>
 
 <hr/>
+## Executive Overview
+
+This repository demonstrates:
+
+- Structured threat hunting methodology
+- Multi-table KQL evidence chaining
+- MITRE ATT&CK alignment
+- Detection engineering translation
+- Coverage gap assessment
+
+The goal is not just to query logs —
+but to design defensible detection strategy.
+
+---
 
 # KQL Log Analysis & Threat Hunting
 ## Complete Beginner-to-Practitioner Guide
 
 A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
-
----
-
-## Visual Overview
-
-<p align="center">
-  <img src="docs/diagrams/hunt-flow.svg" alt="Threat Hunting Lifecycle" width="100%" />
-</p>
-
-<p align="center">
-  <img src="docs/diagrams/attack-chain.svg" alt="Evidence / Attack Chain" width="100%" />
-</p>
-
-<p align="center">
-  <img src="docs/diagrams/data-sources.svg" alt="Microsoft Security Data Sources" width="100%" />
-</p>
 
 ---
 
@@ -60,11 +58,12 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
 ---
+
+
 # Coverage Heat Map
 <p align="center">
   <img src="docs/diagrams/coverage-heatmap.svg" width="80%" />
 </p>
-
 ---
 
 # 📈 Detection Maturity Model
@@ -86,6 +85,23 @@ The following telemetry and detection gaps were identified:
 - ❌ No UEBA/behavior-based anomaly modeling
 - ❌ No ML-based frequency deviation detection
 - ❌ No cross-tenant correlation
+---
+## Visual Overview
+
+<p align="center">
+  <img src="docs/diagrams/hunt-flow.svg" alt="Threat Hunting Lifecycle" width="100%" />
+</p>
+
+<p align="center">
+  <img src="docs/diagrams/attack-chain.svg" alt="Evidence / Attack Chain" width="100%" />
+</p>
+
+<p align="center">
+  <img src="docs/diagrams/data-sources.svg" alt="Microsoft Security Data Sources" width="100%" />
+</p>
+
+---
+
 
 ## Strategic Next Steps
 
