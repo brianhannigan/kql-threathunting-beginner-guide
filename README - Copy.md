@@ -1,56 +1,89 @@
-<!-- ===== HERO HEADER ===== -->
-<p align="center">
-  <img src="docs/diagrams/hero.svg" alt="KQL Threat Hunting — Beginner Guide" width="100%" />
-</p>
+![KQL Threat Hunting Hero](docs/diagrams/hero.svg)
 
-<!-- ===== BADGES ===== -->
-<p align="center">
-  <img src="https://img.shields.io/badge/KQL-Threat_Hunting-2b6cb0?style=for-the-badge" alt="KQL" />
-  <img src="https://img.shields.io/badge/Microsoft-Sentinel-0078D4?style=for-the-badge&logo=microsoft" alt="Microsoft Sentinel" />
-  <img src="https://img.shields.io/badge/Microsoft-Defender_XDR-00A4EF?style=for-the-badge&logo=microsoft" alt="Defender XDR" />
-  <img src="https://img.shields.io/badge/MITRE-ATT%26CK-111827?style=for-the-badge" alt="MITRE ATT&CK" />
-  <img src="https://img.shields.io/badge/Level-Beginner_%E2%86%92_Practitioner-16a34a?style=for-the-badge" alt="Level" />
-</p>
-
-<hr/>
-
-# KQL Log Analysis & Threat Hunting
-## Complete Beginner-to-Practitioner Guide
-
-A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
+![KQL](https://img.shields.io/badge/KQL-Threat_Hunting-2b6cb0?style=for-the-badge)
+![Microsoft Sentinel](https://img.shields.io/badge/Microsoft-Sentinel-0078D4?style=for-the-badge&logo=microsoft)
+![Defender XDR](https://img.shields.io/badge/Microsoft-Defender_XDR-00A4EF?style=for-the-badge&logo=microsoft)
+![MITRE](https://img.shields.io/badge/MITRE-ATT%26CK-111827?style=for-the-badge)
+![Level](https://img.shields.io/badge/Level-Beginner_%E2%86%92_Practitioner-16a34a?style=for-the-badge)
 
 ---
 
-## Visual Overview
+## Overview
 
-<p align="center">
-  <img src="docs/diagrams/hunt-flow.svg" alt="Threat Hunting Lifecycle" width="100%" />
-</p>
+**KQL Log Analysis & Threat Hunting** is a practical, end-to-end guide for learning **Kusto Query Language (KQL)** in Microsoft security environments (Microsoft Sentinel, Microsoft Defender XDR, and Log Analytics).
 
-<p align="center">
-  <img src="docs/diagrams/attack-chain.svg" alt="Evidence / Attack Chain" width="100%" />
-</p>
-
-<p align="center">
-  <img src="docs/diagrams/data-sources.svg" alt="Microsoft Security Data Sources" width="100%" />
-</p>
+This repo is designed to help you:
+- Think like an analyst (scope → pivot → validate → document)
+- Build repeatable KQL “muscle memory”
+- Translate hunts into **detections** (analytics rules) and **coverage**
 
 ---
 
-## What This Repo Teaches
+## Demo: What You’ll Be Able To Do
 
-| Skill | You’ll Learn |
+> Hunt suspicious behavior across identity, endpoint, process, network, file, and registry telemetry — and produce a defensible investigation narrative.
+
+### Hunting Lifecycle (Visual)
+![Hunting Lifecycle](docs/diagrams/hunt-flow.svg)
+
+---
+
+# Core Capabilities
+
+| Category | Capability |
 |---|---|
-| KQL Foundations | `where`, `project`, `summarize`, `sort`, time scoping |
-| Threat Hunting Workflow | scope → pivot → validate → document |
-| Evidence Chaining | logon → process → network → registry → file |
-| MITRE Mapping | translate behaviors into ATT&CK techniques |
-| Investigation Narrative | build a defensible timeline & artifacts |
+| KQL Fundamentals | Filtering, projection, summarization, time-scoping |
+| Threat Hunting | Multi-table pivots and hypothesis-driven investigation |
+| Evidence Chaining | Logon → Process → Network → Registry → File correlation |
+| MITRE Mapping | Translate behaviors into ATT&CK tactics/techniques |
+| Detection Engineering | Convert hunts into rule logic + tuning guidance |
+| Reporting | Produce analyst-ready notes, timelines, and findings |
 
 ---
+
+# Evidence / Attack Chain Model
+
+![Evidence Chain](docs/diagrams/attack-chain.svg)
+
+**Principle:** Don’t hunt in one table. Build a chain:
+- **Logon** (who / where from)
+- **Process** (what executed)
+- **Network** (where it talked)
+- **Registry** (what changed)
+- **File** (what staged / dropped)
+
+---
+
+# Data Sources Covered (Microsoft Tables)
+
+![Data Sources](docs/diagrams/data-sources.svg)
+
+### Key Tables You’ll Use
+- `DeviceLogonEvents`
+- `DeviceProcessEvents`
+- `DeviceNetworkEvents`
+- `DeviceFileEvents`
+- `DeviceRegistryEvents`
+
+---
+
+# Detection Coverage Matrix (Starter)
+
+| MITRE Tactic | What you hunt | Primary tables |
+|---|---|---|
+| Initial Access | Suspicious remote logons / RDP / anomalous IPs | `DeviceLogonEvents` |
+| Execution | PowerShell/LOLBin patterns, encoded commands | `DeviceProcessEvents` |
+| Discovery | `whoami`, `arp -a`, `net view`, enumeration | `DeviceProcessEvents` |
+| Defense Evasion | Defender exclusions, tampering | `DeviceRegistryEvents` |
+| Persistence | Scheduled tasks, startup patterns | `DeviceProcessEvents`, `DeviceRegistryEvents` |
+| Command & Control | Suspicious outbound destinations / ports | `DeviceNetworkEvents` |
+| Collection/Exfil | ZIP staging, cloud endpoints, bulk transfer signals | `DeviceFileEvents`, `DeviceNetworkEvents` |
+
+---
+
+# Guide
 
 ## Table of Contents
-
 - [Why KQL Matters](#why-kql-matters)
 - [What Logs Actually Are](#what-logs-actually-are)
 - [How Logs Are Stored (Log Analytics Workspace)](#how-logs-are-stored-log-analytics-workspace)
@@ -66,20 +99,20 @@ A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Mic
 
 ---
 
-## Guide
-
-## Why KQL Matters
+## 🎯 Why KQL Matters
 
 If you want to work in:
+
 - SOC (Security Operations Center)
 - Threat Hunting
 - Incident Response
 - Cloud Security (Azure)
 - Microsoft Defender / Sentinel environments
 
-**KQL is near-essential.**
+👉 **KQL is near-essential.**
 
 KQL is used to:
+
 - Investigate alerts
 - Perform threat hunts
 - Build dashboards
@@ -88,23 +121,27 @@ KQL is used to:
 - Analyze breaches
 
 It is one of the biggest differentiators between:
+
 - L1 analyst
 - L2/L3 analyst
 - Security engineer
 
 If you can think in KQL, you can think in:
+
 - SQL
 - SPL
 - Other SIEM query languages
 
 ---
 
-## What Logs Actually Are
+## 🧾 What Logs Actually Are
 
 Logs are:
-- Digital records of activity on systems.
+
+- 📌 Digital records of activity on systems.
 
 Examples of events that generate logs:
+
 - Logon success/failure
 - Process execution (PowerShell, cmd, certutil)
 - File creation/deletion
@@ -114,18 +151,21 @@ Examples of events that generate logs:
 - Firewall activity
 
 Think of logs as:
-- Security cameras for your IT environment — but in text form.
+
+- 🎥 Security cameras for your IT environment — but in text form.
 
 Without logs:
+
 - You cannot investigate.
 - You cannot prove compromise.
 - You cannot detect attacks.
 
 ---
 
-## How Logs Are Stored (Log Analytics Workspace)
+## 🗄️ How Logs Are Stored (Log Analytics Workspace)
 
 In enterprise environments, logs from:
+
 - Endpoints
 - Azure
 - Firewalls
@@ -134,28 +174,32 @@ In enterprise environments, logs from:
 ...are forwarded to a central repository.
 
 In Microsoft environments, that’s usually:
+
 - Log Analytics Workspace
 - Sometimes Azure Data Explorer
 
 Think of it like:
-- Millions of gigantic spreadsheets (tables)
+
+- 🧮 Millions of gigantic spreadsheets (tables)
 
 At scale, you may have:
+
 - Millions
 - Hundreds of millions
 - Billions of records
 
 Which is why:
+
 - You cannot manually scroll logs.
 - You must query them.
 
 ---
 
-## Core Security Tables Explained
+## 🗂️ Core Security Tables Explained
 
 These are the most important tables for threat hunting.
 
-### DeviceLogonEvents
+### 🔐 DeviceLogonEvents
 **Used for:**
 - RDP activity
 - Logon success/failure
@@ -167,7 +211,7 @@ These are the most important tables for threat hunting.
 - `ActionType`
 - `LogonType`
 
-### DeviceProcessEvents
+### 🖥️ DeviceProcessEvents
 **Used for:**
 - Command execution
 - PowerShell activity
@@ -179,7 +223,7 @@ These are the most important tables for threat hunting.
 - `ProcessCommandLine`
 - `InitiatingProcessCommandLine`
 
-### DeviceFileEvents
+### 📁 DeviceFileEvents
 **Used for:**
 - File creation
 - Folder creation
@@ -191,7 +235,7 @@ These are the most important tables for threat hunting.
 - `FolderPath`
 - `ActionType`
 
-### DeviceNetworkEvents
+### 🌐 DeviceNetworkEvents
 **Used for:**
 - Command & Control (C2)
 - Data exfiltration
@@ -204,7 +248,7 @@ These are the most important tables for threat hunting.
 - `RemoteUrl`
 - `InitiatingProcessFileName`
 
-### DeviceRegistryEvents
+### 🧩 DeviceRegistryEvents
 **Used for:**
 - Defender exclusions
 - Persistence changes
@@ -214,16 +258,6 @@ These are the most important tables for threat hunting.
 - `RegistryKey`
 - `RegistryValueName`
 - `RegistryValueData`
-
----
-
-## KQL Fundamentals
-
-### 1) Start small (never dump the entire table)
-```kql
-DeviceLogonEvents
-| take 10
-
 
 ---
 
