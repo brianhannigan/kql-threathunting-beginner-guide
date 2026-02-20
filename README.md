@@ -2,6 +2,17 @@
 <p align="center">
   <img src="docs/diagrams/hero.svg" alt="KQL Threat Hunting — Beginner Guide" width="100%" />
 </p>
+---
+
+## 🔎 Animated Hunt Walkthrough
+
+A quick visual of the workflow you follow during hunts: scope → pivot → correlate → map to ATT&CK.
+
+<p align="center">
+  <img src="docs/diagrams/hunt-walkthrough.svg" alt="Animated KQL Hunt Walkthrough" width="100%" />
+</p>
+
+---
 
 <!-- ===== BADGES ===== -->
 <p align="center">
@@ -87,17 +98,6 @@ The following telemetry and detection gaps were identified:
 5. Track detection false-positive rate
 
 ---
-
-# 🔎 Animated Hunt Walkthrough
-
-<p align="center">
-  <img src="docs/diagrams/hunt-walkthrough.svg" width="100%" />
-</p>
-
----
-
-
-
 
 ## What This Repo Teaches
 
