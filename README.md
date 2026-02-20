@@ -6,11 +6,10 @@
 
 ## 🔎 Animated Hunt Walkthrough
 
-A quick visual of the workflow you follow during hunts: scope → pivot → correlate → map to ATT&CK.
-
 <p align="center">
   <img src="docs/diagrams/hunt-walkthrough.svg" alt="Animated KQL Hunt Walkthrough" width="100%" />
 </p>
+
 
 ---
 
