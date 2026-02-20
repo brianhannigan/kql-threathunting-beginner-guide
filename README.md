@@ -548,24 +548,74 @@ It’s about learning to think:
 Master that, and you can hunt anything. 🔥
 
 ---
-## Screenshot Panels
+---
+
+# 📸 Investigation Screens (Workflow in Action)
+
+Below are representative views from Microsoft Sentinel and Microsoft Defender XDR environments.  
+Each panel reflects a stage in the investigation lifecycle.
+
+---
+
+## 1️⃣ Sentinel Logs — Query & Results Pivot
+
+> Hypothesis-driven hunting using KQL in Microsoft Sentinel.
+
+This panel demonstrates:
+- Structured time scoping  
+- Targeted filtering (`where`)  
+- Result pivoting for rapid anomaly identification  
 
 <p align="center">
-  <img src="docs/images/screen-01.png" alt="Sentinel Logs — KQL Query + Results" width="100%" />
+  <img src="docs/images/screen-01.png" alt="Sentinel Logs — KQL Query and Results" width="90%" />
 </p>
+
+---
+
+## 2️⃣ Defender XDR — Advanced Hunting Correlation
+
+> Cross-table evidence chaining (Process → Network → Account).
+
+This panel demonstrates:
+- Multi-table hunting  
+- Command-line inspection  
+- Rapid process-to-network correlation  
 
 <p align="center">
-  <img src="docs/images/screen-02.png" alt="Defender XDR — Advanced Hunting Results" width="100%" />
+  <img src="docs/images/screen-02.png" alt="Defender XDR — Advanced Hunting Results" width="90%" />
 </p>
+
+---
+
+## 3️⃣ Defender for Endpoint — Device Timeline
+
+> Timeline reconstruction for attacker behavior analysis.
+
+This panel demonstrates:
+- Event sequence visualization  
+- Suspicious activity clustering  
+- Temporal investigation validation  
 
 <p align="center">
-  <img src="docs/images/screen-03.png" alt="Defender for Endpoint — Device Timeline" width="100%" />
+  <img src="docs/images/screen-03.png" alt="Defender for Endpoint — Device Timeline" width="90%" />
 </p>
+
+---
+
+## 4️⃣ Microsoft Sentinel — Entity Investigation View
+
+> Contextual investigation with entity-based intelligence.
+
+This panel demonstrates:
+- Alerts over time  
+- Account/Host relationship mapping  
+- MITRE ATT&CK contextualization  
 
 <p align="center">
-  <img src="docs/images/screen-04.png" alt="Microsoft Sentinel — Entity Page (Investigation View)" width="100%" />
+  <img src="docs/images/screen-04.png" alt="Microsoft Sentinel — Entity Investigation Page" width="90%" />
 </p>
 
+---
 
 ---
 
