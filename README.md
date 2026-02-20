@@ -94,13 +94,6 @@ The intent is to demonstrate structured hunting and detection design within Micr
 
 ---
 
-# KQL Log Analysis & Threat Hunting
-## Complete Beginner-to-Practitioner Guide
-
-A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
-
----
-
 ## 🛡 Detection Coverage Matrix
 
 <details>
@@ -124,19 +117,27 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 
 ## 📊 Coverage Heat Map
 
+<details>
+<summary>Click to expand</summary>
+  
 <p align="center">
   <img src="docs/diagrams/coverage-heatmap.svg" alt="Coverage Heat Map" width="80%" />
 </p>
 
 ---
+</details>
 
 ## 📈 Detection Maturity Model
+
+<details>
+<summary>Click to expand</summary>
 
 <p align="center">
   <img src="docs/diagrams/detection-maturity-ladder.svg" alt="Detection Maturity Ladder" width="80%" />
 </p>
 
 ---
+</details>
 
 ## 🔍 Coverage Gap Analysis
 
