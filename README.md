@@ -100,8 +100,9 @@ The intent is to demonstrate structured hunting and detection design within Micr
 A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
 
 ---
-
 ## 🛡 Detection Coverage Matrix
+<details>
+<summary>Click to expand</summary>
 
 This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and operational maturity.
 
@@ -115,7 +116,7 @@ This matrix maps hunt logic to MITRE ATT&CK tactics, telemetry sources, and oper
 | Command & Control | T1071 – Web Protocols | Suspicious outbound IP/domain | DeviceNetworkEvents | 🟢 High |
 | Collection | T1560 – Archive Data | ZIP staging detection | DeviceFileEvents | 🟡 Medium |
 | Exfiltration | T1041 – Exfil Over C2 | High-volume transfer detection | DeviceNetworkEvents | 🔴 Needs Tuning |
-
+</details>
 ---
 
 ## 📊 Coverage Heat Map
