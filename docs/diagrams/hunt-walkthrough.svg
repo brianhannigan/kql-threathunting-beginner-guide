@@ -1,76 +1,196 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="460" viewBox="0 0 1600 460" role="img" aria-label="Animated KQL Threat Hunt Walkthrough">
   <defs>
+    <!-- Background -->
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0b1220"/>
       <stop offset="1" stop-color="#0f1b33"/>
     </linearGradient>
 
-    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
-      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#5b7aa6" stroke-opacity="0.12" stroke-width="1"/>
+    <!-- Grid -->
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#9fb3c8" stroke-opacity="0.10" stroke-width="1"/>
     </pattern>
 
+    <!-- Accent gradients -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#67b8ff"/>
+      <stop offset="1" stop-color="#8be9a8"/>
+    </linearGradient>
+
+    <!-- Pulse gradient for moving dash -->
     <linearGradient id="pulse" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#67b8ff" stop-opacity="0"/>
       <stop offset="0.5" stop-color="#67b8ff" stop-opacity="1"/>
       <stop offset="1" stop-color="#67b8ff" stop-opacity="0"/>
     </linearGradient>
 
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="b"/>
+    <!-- Soft glow -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 0.45 0" result="g"/>
       <feMerge>
-        <feMergeNode in="b"/>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Card shadow -->
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 0.35 0" result="s"/>
+      <feMerge>
+        <feMergeNode in="s"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
 
     <style>
-      .title { font: 700 22px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#eaf2ff; }
-      .sub   { font: 500 14px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#a8c3ea; }
-      .step  { font: 700 16px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#eaf2ff; }
-      .hint  { font: 600 14px system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#8be9a8; }
+      .title { font: 800 28px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#eaf2ff; }
+      .sub   { font: 600 15px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#cfe0f7; opacity:0.92; }
 
-      /* CSS-based animation (works reliably when SVG is loaded via <img> on GitHub) */
-      .pulseLine {
-        stroke-dasharray: 180 1400;
-        animation: dashmove 3.8s linear infinite;
+      .cardTitle { font: 800 16px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#eaf2ff; }
+      .cardSub   { font: 600 12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#afc3de; opacity:0.95; }
+      .chipTxt   { font: 800 12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; fill:#cfe0f7; }
+
+      /* Pulse dash animation (GitHub-safe) */
+      .railPulse {
+        stroke-dasharray: 220 1600;
+        animation: dashmove 3.6s linear infinite;
       }
       @keyframes dashmove {
         from { stroke-dashoffset: 0; }
-        to   { stroke-dashoffset: -1400; }
+        to   { stroke-dashoffset: -1600; }
       }
 
-      .dot {
-        animation: dotglow 1.6s ease-in-out infinite alternate;
+      /* Moving highlight sweep across the rail */
+      .sweep {
+        animation: sweepmove 3.6s linear infinite;
+        opacity: 0.30;
       }
-      @keyframes dotglow {
-        from { opacity: 0.55; }
-        to   { opacity: 1; }
+      @keyframes sweepmove {
+        from { transform: translateX(-220px); opacity: 0.0; }
+        15%  { opacity: 0.35; }
+        85%  { opacity: 0.35; }
+        to   { transform: translateX(1600px); opacity: 0.0; }
+      }
+
+      /* Stage dots blink */
+      .dot { animation: dotpulse 1.4s ease-in-out infinite alternate; }
+      @keyframes dotpulse { from { opacity: 0.55; } to { opacity: 1; } }
+
+      /* Active card cycles by group opacity */
+      .step1 { animation: stepCycle 10s infinite; }
+      .step2 { animation: stepCycle 10s infinite; animation-delay: -8s; }
+      .step3 { animation: stepCycle 10s infinite; animation-delay: -6s; }
+      .step4 { animation: stepCycle 10s infinite; animation-delay: -4s; }
+      .step5 { animation: stepCycle 10s infinite; animation-delay: -2s; }
+
+      @keyframes stepCycle {
+        0%   { opacity: 1; }
+        18%  { opacity: 1; }
+        20%  { opacity: 0.18; }
+        100% { opacity: 0.18; }
       }
     </style>
   </defs>
 
-  <rect width="1400" height="420" rx="22" fill="url(#bg)"/>
-  <rect width="1400" height="420" rx="22" fill="url(#grid)"/>
+  <!-- Card container -->
+  <rect x="24" y="20" width="1552" height="420" rx="26" fill="url(#bg)" stroke="#a8b7cc" stroke-opacity="0.14"/>
+  <rect x="36" y="32" width="1528" height="396" rx="22" fill="url(#grid)"/>
 
-  <text x="60" y="70" class="title">Animated Hunt Walkthrough</text>
-  <text x="60" y="95" class="sub">Hypothesis → Pivot → Timeline → ATT&amp;CK mapping (KQL investigation flow)</text>
+  <!-- Header -->
+  <text x="70" y="90" class="title">Animated Hunt Walkthrough</text>
+  <text x="70" y="120" class="sub">Scope → Pivot → Correlate → Validate → Map to ATT&amp;CK → Operationalize</text>
 
-  <!-- main pulse line -->
-  <line x1="120" y1="230" x2="1280" y2="230" stroke="url(#pulse)" stroke-width="6" filter="url(#glow)" class="pulseLine"/>
+  <!-- Chips -->
+  <g transform="translate(70 140)">
+    <rect width="128" height="32" rx="16" fill="#111a2e" stroke="#a8b7cc" stroke-opacity="0.14"/>
+    <text x="16" y="21" class="chipTxt">KQL</text>
 
-  <!-- step labels -->
-  <text x="120"  y="165" class="step">1. Scope</text>
-  <text x="370"  y="165" class="step">2. Logon Pivot</text>
-  <text x="640"  y="165" class="step">3. Process</text>
-  <text x="900"  y="165" class="step">4. Network</text>
-  <text x="1140" y="165" class="step">5. ATT&amp;CK</text>
+    <g transform="translate(140 0)">
+      <rect width="170" height="32" rx="16" fill="#111a2e" stroke="#a8b7cc" stroke-opacity="0.14"/>
+      <text x="16" y="21" class="chipTxt">Evidence Chain</text>
+    </g>
 
-  <!-- step markers -->
-  <circle cx="140"  cy="230" r="8" fill="#8be9a8" class="dot"/>
-  <circle cx="420"  cy="230" r="8" fill="#67b8ff" class="dot"/>
-  <circle cx="700"  cy="230" r="8" fill="#67b8ff" class="dot"/>
-  <circle cx="980"  cy="230" r="8" fill="#67b8ff" class="dot"/>
-  <circle cx="1240" cy="230" r="8" fill="#ffd480" class="dot"/>
+    <g transform="translate(324 0)">
+      <rect width="168" height="32" rx="16" fill="#111a2e" stroke="#a8b7cc" stroke-opacity="0.14"/>
+      <text x="16" y="21" class="chipTxt">ATT&amp;CK</text>
+    </g>
+  </g>
 
-  <text x="360" y="300" class="hint">DeviceLogonEvents → DeviceProcessEvents → DeviceNetworkEvents</text>
+  <!-- Rail -->
+  <g transform="translate(0 0)">
+    <line x1="120" y1="260" x2="1480" y2="260" stroke="url(#accent)" stroke-width="6" stroke-linecap="round" opacity="0.18"/>
+    <line x1="120" y1="260" x2="1480" y2="260" stroke="url(#pulse)" stroke-width="6" stroke-linecap="round" filter="url(#glow)" class="railPulse"/>
+
+    <!-- Sweep highlight rectangle that moves across rail -->
+    <g class="sweep">
+      <rect x="120" y="246" width="220" height="28" rx="14" fill="#67b8ff" opacity="0.22"/>
+    </g>
+
+    <!-- Dots -->
+    <circle cx="140"  cy="260" r="9" fill="#8be9a8" class="dot"/>
+    <circle cx="470"  cy="260" r="9" fill="#67b8ff" class="dot"/>
+    <circle cx="760"  cy="260" r="9" fill="#67b8ff" class="dot"/>
+    <circle cx="1040" cy="260" r="9" fill="#67b8ff" class="dot"/>
+    <circle cx="1340" cy="260" r="9" fill="#ffd480" class="dot"/>
+  </g>
+
+  <!-- Step cards (cycling highlight) -->
+  <g transform="translate(90 308)" filter="url(#cardShadow)">
+    <!-- Card base row -->
+    <rect x="0" y="0" width="1420" height="96" rx="20" fill="#0e1730" stroke="#a8b7cc" stroke-opacity="0.14"/>
+
+    <!-- Active overlays (one at a time via opacity animation) -->
+    <g class="step1">
+      <rect x="18" y="14" width="260" height="68" rx="16" fill="#111a2e" stroke="#8be9a8" stroke-opacity="0.35"/>
+    </g>
+    <g class="step2">
+      <rect x="298" y="14" width="260" height="68" rx="16" fill="#111a2e" stroke="#67b8ff" stroke-opacity="0.35"/>
+    </g>
+    <g class="step3">
+      <rect x="578" y="14" width="260" height="68" rx="16" fill="#111a2e" stroke="#67b8ff" stroke-opacity="0.35"/>
+    </g>
+    <g class="step4">
+      <rect x="858" y="14" width="260" height="68" rx="16" fill="#111a2e" stroke="#67b8ff" stroke-opacity="0.35"/>
+    </g>
+    <g class="step5">
+      <rect x="1138" y="14" width="264" height="68" rx="16" fill="#111a2e" stroke="#ffd480" stroke-opacity="0.35"/>
+    </g>
+
+    <!-- Labels -->
+    <g transform="translate(24 26)">
+      <text x="0" y="18" class="cardTitle">1) Scope</text>
+      <text x="0" y="40" class="cardSub">Set device/user + time window</text>
+    </g>
+    <g transform="translate(304 26)">
+      <text x="0" y="18" class="cardTitle">2) Logon Pivot</text>
+      <text x="0" y="40" class="cardSub">RDP / anomalies / remote IP</text>
+    </g>
+    <g transform="translate(584 26)">
+      <text x="0" y="18" class="cardTitle">3) Process</text>
+      <text x="0" y="40" class="cardSub">PowerShell / LOLBins / tasks</text>
+    </g>
+    <g transform="translate(864 26)">
+      <text x="0" y="18" class="cardTitle">4) Network</text>
+      <text x="0" y="40" class="cardSub">C2 / outbound domains / ports</text>
+    </g>
+    <g transform="translate(1144 26)">
+      <text x="0" y="18" class="cardTitle">5) ATT&amp;CK</text>
+      <text x="0" y="40" class="cardSub">Map + detection rule logic</text>
+    </g>
+  </g>
+
+  <!-- Footer hint -->
+  <text x="52" y="442" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto, Arial" font-size="12" fill="#afc3de" opacity="0.65">
+    docs/diagrams/hunt-walkthrough.svg
+  </text>
 </svg>
