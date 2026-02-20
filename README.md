@@ -3,6 +3,40 @@
   <img src="docs/diagrams/hero.svg" alt="KQL Threat Hunting — Beginner Guide" width="100%" />
 </p>
 
+# KQL Log Analysis & Threat Hunting
+## Complete Beginner-to-Practitioner Guide
+
+A practical, end-to-end tutorial for using **Kusto Query Language (KQL)** in Microsoft security environments, including **Microsoft Sentinel**, **Microsoft Defender XDR**, and **Log Analytics**.
+
+---
+
+## Table of Contents
+
+- [Executive Overview](#executive-overview)
+- [Scope](#scope)
+- [Detection Coverage Matrix](#-detection-coverage-matrix)
+- [Coverage Heat Map](#-coverage-heat-map)
+- [Detection Maturity Model](#-detection-maturity-model)
+- [Coverage Gap Analysis](#-coverage-gap-analysis)
+- [Strategic Next Steps](#strategic-next-steps)
+- [Visual Investigation Architecture](#-visual-investigation-architecture)
+- [What This Repo Teaches](#what-this-repo-teaches)
+- [Why KQL Matters](#why-kql-matters)
+- [What Logs Actually Are](#what-logs-actually-are)
+- [How Logs Are Stored (Log Analytics Workspace)](#how-logs-are-stored-log-analytics-workspace)
+- [Core Security Tables Explained](#core-security-tables-explained)
+- [KQL Fundamentals](#kql-fundamentals)
+- [Investigation Workflow Framework](#-investigation-workflow-framework)
+- [Full Threat Hunt Walkthrough (20 Flags)](#-full-threat-hunt-walkthrough-20-flags)
+- [Reusable Query Cheat Sheet](#-reusable-query-cheat-sheet)
+- [Using AI to Accelerate Threat Hunting](#-using-ai-to-accelerate-threat-hunting)
+- [Final Lessons & Career Impact](#-final-lessons--career-impact)
+- [What You Should Now Be Able To Do](#-what-you-should-now-be-able-to-do)
+- [Closing](#-closing)
+- [Investigation Screens (Workflow in Action)](#-investigation-screens-workflow-in-action)
+
+---
+
 ## 🔎 Animated Hunt Walkthrough
 
 <p align="center">
@@ -21,6 +55,7 @@
 </p>
 
 ---
+
 
 ## Executive Overview
 
@@ -148,23 +183,6 @@ The following telemetry and detection gaps were identified:
 | Evidence Chaining | logon → process → network → registry → file |
 | MITRE Mapping | translate behaviors into ATT&CK techniques |
 | Investigation Narrative | build a defensible timeline & artifacts |
-
----
-
-## Table of Contents
-
-- [Why KQL Matters](#why-kql-matters)
-- [What Logs Actually Are](#what-logs-actually-are)
-- [How Logs Are Stored (Log Analytics Workspace)](#how-logs-are-stored-log-analytics-workspace)
-- [Core Security Tables Explained](#core-security-tables-explained)
-- [KQL Fundamentals](#kql-fundamentals)
-- [Investigation Workflow Framework](#-investigation-workflow-framework)
-- [Full Threat Hunt Walkthrough (20 Flags)](#-full-threat-hunt-walkthrough-20-flags)
-- [Reusable Query Cheat Sheet](#-reusable-query-cheat-sheet)
-- [Using AI to Accelerate Threat Hunting](#-using-ai-to-accelerate-threat-hunting)
-- [Final Lessons & Career Impact](#-final-lessons--career-impact)
-- [What You Should Now Be Able To Do](#-what-you-should-now-be-able-to-do)
-- [Closing](#-closing)
 
 ---
 
