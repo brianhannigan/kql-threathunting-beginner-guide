@@ -223,17 +223,7 @@ These are the most important tables for threat hunting.
 ```kql
 DeviceLogonEvents
 | take 10
-
-
 ---
-
-## 🧠 KQL Fundamentals
-
-### 1) Start small (never dump the entire table)
-```kql
-DeviceLogonEvents
-| take 10
-```
 
 ### 2) Filter with `where`
 ```kql
